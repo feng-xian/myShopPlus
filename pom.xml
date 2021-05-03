@@ -16,16 +16,16 @@
     <packaging>pom</packaging>
     <url>http://www.funtl.com</url>
 
-<!--    <modules>-->
-<!--        <module>dependencies</module>-->
+    <modules>
+        <module>dependencies</module>
 <!--        <module>commons</module>-->
 <!--        <module>configuration</module>-->
-<!--        <module>provider</module>-->
+        <module>provider</module>
 <!--        <module>business</module>-->
 <!--        <module>gateway</module>-->
 <!--        <module>cloud</module>-->
 <!--        <module>message</module>-->
-<!--    </modules>-->
+    </modules>
 
     <properties>
         <java.version>11</java.version>
@@ -100,6 +100,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-enforcer-plugin</artifactId>
+<!--                        <version>3.0.0-M3</version>-->
                         <version>1.4.1</version>
                         <executions>
                             <execution>
