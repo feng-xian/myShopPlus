@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * (TUmsAdmin)实体类
  *
- * @author makejava
+ * @Author : 凤仙
  * @since 2021-05-02 14:43:15
  */
 @Data

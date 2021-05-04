@@ -5,12 +5,12 @@
 
     <parent>
         <groupId>com.yl.myshop.plus</groupId>
-        <artifactId>provider</artifactId>
+        <artifactId>parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>provider-admin-api</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>commons</artifactId>
+    <packaging>pom</packaging>
     <url>http://www.funtl.com</url>
     <inceptionYear>2018-Now</inceptionYear>
 
@@ -21,18 +21,17 @@
         </license>
     </licenses>
 
+    <properties>
+        <lombok.version>1.18.16</lombok.version>
+    </properties>
+
     <developers>
         <developer>
-            <id>yelei</id>
-            <name>YeLei</name>
+            <id>fengxian</id>
+            <name>FengXian</name>
             <email>2218050479@qq.com</email>
         </developer>
     </developers>
-
-    <properties>
-        <lombok.version>1.18.16</lombok.version>
-        <javax-persistence.version>2.2</javax-persistence.version>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -41,10 +40,11 @@
             <version>${lombok.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
-            <version>${javax-persistence.version}</version>
-        </dependency>
     </dependencies>
+
+<!--    <modules>-->
+<!--        <module>commons-dto</module>-->
+<!--        <module>commons-utils</module>-->
+<!--        <module>commons-provider</module>-->
+<!--    </modules>-->
 </project>

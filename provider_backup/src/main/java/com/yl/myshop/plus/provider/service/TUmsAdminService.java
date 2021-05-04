@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * (TUmsAdmin)表服务接口
  *
- * @author makejava
+ * @Author : 凤仙
  * @since 2021-05-02 14:43:30
  */
 public interface TUmsAdminService {

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * (TUmsAdmin)表数据库访问层
  *
- * @author makejava
+ * @Author : 凤仙
  * @since 2021-05-02 14:43:22
  */
 @Mapper
@@ -44,13 +44,6 @@ public interface TUmsAdminMapper extends BaseMapper<TUmsAdmin> {
      */
     List<TUmsAdmin> queryAll(TUmsAdmin tUmsAdmin);
 
-    /**
-     * 新增数据
-     *
-     * @param tUmsAdmin 实例对象
-     * @return 影响行数
-     */
-    int insert(TUmsAdmin tUmsAdmin);
 
     /**
      * 批量新增数据（MyBatis原生foreach方法）

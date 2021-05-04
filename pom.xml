@@ -18,10 +18,10 @@
 
     <modules>
         <module>dependencies</module>
-<!--        <module>commons</module>-->
+        <module>commons</module>
 <!--        <module>configuration</module>-->
         <module>provider</module>
-<!--        <module>business</module>-->
+        <module>business</module>
 <!--        <module>gateway</module>-->
 <!--        <module>cloud</module>-->
 <!--        <module>message</module>-->
@@ -50,17 +50,17 @@
         </developer>
     </developers>
 
-<!--    <dependencyManagement>-->
-<!--        <dependencies>-->
-<!--            <dependency>-->
-<!--                <groupId>com.yl.myshop.plus</groupId>-->
-<!--                <artifactId>dependencies</artifactId>-->
-<!--                <version>${project.version}</version>-->
-<!--                <type>pom</type>-->
-<!--                <scope>import</scope>-->
-<!--            </dependency>-->
-<!--        </dependencies>-->
-<!--    </dependencyManagement>-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.yl.myshop.plus</groupId>
+                <artifactId>dependencies</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <profiles>
         <profile>

@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * (TUmsAdmin)实体类
  *
- * @author makejava
+ * @Author : 凤仙
  * @since 2021-05-02 14:43:15
  */
 @Data
@@ -33,6 +33,9 @@ public class TUmsAdmin implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "address")
     private String address;
 
@@ -52,10 +55,16 @@ public class TUmsAdmin implements Serializable {
     private String idCard;
 
     /**
-     * 待定
+     * 0:未启用，1：已启用
      */
     @Column(name = "status")
     private Integer status;
+
+    @Column(name = "login_date")
+    private Date loginDate;
+
+    @Column(name = "password")
+    private String password;
 
 
 }

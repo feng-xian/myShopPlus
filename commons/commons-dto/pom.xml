@@ -5,11 +5,11 @@
 
     <parent>
         <groupId>com.yl.myshop.plus</groupId>
-        <artifactId>provider</artifactId>
+        <artifactId>commons</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>provider-admin-api</artifactId>
+    <artifactId>commons-dto</artifactId>
     <packaging>jar</packaging>
     <url>http://www.funtl.com</url>
     <inceptionYear>2018-Now</inceptionYear>
@@ -23,28 +23,9 @@
 
     <developers>
         <developer>
-            <id>yelei</id>
-            <name>YeLei</name>
+            <id>fengxian</id>
+            <name>FengXian</name>
             <email>2218050479@qq.com</email>
         </developer>
     </developers>
-
-    <properties>
-        <lombok.version>1.18.16</lombok.version>
-        <javax-persistence.version>2.2</javax-persistence.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>javax.persistence-api</artifactId>
-            <version>${javax-persistence.version}</version>
-        </dependency>
-    </dependencies>
 </project>

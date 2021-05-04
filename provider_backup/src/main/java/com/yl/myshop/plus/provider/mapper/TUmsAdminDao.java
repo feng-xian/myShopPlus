@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * (TUmsAdmin)表数据库访问层
  *
- * @author makejava
+ * @Author : 凤仙
  * @since 2021-05-02 14:43:22
  */
 @Mapper
