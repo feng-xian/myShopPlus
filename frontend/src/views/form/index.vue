@@ -54,7 +54,7 @@ export default {
       form: {
         name: '',
         region: '',
-        date1: '',A
+        date1: '',
         date2: '',
         delivery: false,
         type: [],
