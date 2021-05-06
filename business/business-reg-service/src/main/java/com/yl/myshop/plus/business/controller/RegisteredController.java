@@ -42,7 +42,7 @@ public class RegisteredController {
         if (null == message){
             int row = umsAdminService.registeredUmsAdmin(tUmsAdmin);
             if (row == 1){
-                TUmsAdmin admin = umsAdminService.getAdmin(tUmsAdmin);
+                TUmsAdmin admin = umsAdminService.getAdmin(tUmsAdmin.getUsername());
                 return new ResponseResult<TUmsAdmin>(HttpStatus.SC_OK,"注册成功！",admin);
             }
             message = "用户注册失败!";

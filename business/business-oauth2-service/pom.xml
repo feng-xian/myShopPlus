@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>business-reg-service</artifactId>
+    <artifactId>business-oauth2-service</artifactId>
     <packaging>jar</packaging>
     <url>http://www.funtl.com</url>
     <inceptionYear>2018-Now</inceptionYear>
@@ -32,8 +32,8 @@
 
     <developers>
         <developer>
-            <id>yelei</id>
-            <name>YeLei</name>
+            <id>fengxian</id>
+            <name>FengXian</name>
             <email>2218050479@qq.com</email>
         </developer>
     </developers>
@@ -56,6 +56,18 @@
             <version>${spring-cloud-alibaba.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${spring-boot-starter-jdbc.version}</version>
+        </dependency>
+
+        <!-- Spring Cloud -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <version>${spring-cloud-alibaba.version}</version>
+        </dependency>
 
         <!-- Spring Cloud Alibaba -->
         <dependency>
@@ -64,27 +76,66 @@
             <version>${spring-cloud-alibaba.version}</version>
         </dependency>
 
+        <!-- Datasource -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${com-zaxxer-HikariCP.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${spring-boot-starter-jdbc.version}</version>
+            <exclusions>
+                <!-- 排除 tomcat-jdbc 以使用 HikariCP -->
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-jdbc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+
         <!-- Projects -->
+<!--        <dependency>-->
+<!--            <groupId>com.yl.myshop.plus</groupId>-->
+<!--            <artifactId>business-profile-feign</artifactId>-->
+<!--            <version>${project.parent.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.yl.myshop.plus</groupId>
             <artifactId>provider-admin-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.yl.myshop.plus</groupId>-->
+<!--            <artifactId>cloud-message-api</artifactId>-->
+<!--            <version>${project.parent.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.yl.myshop.plus</groupId>-->
+<!--            <artifactId>cloud-message-feign</artifactId>-->
+<!--            <version>${project.parent.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.yl.myshop.plus.business.BusinessRegApplication</mainClass>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <mainClass>com.yl.myshop.plus.business.BusinessOAuth2Application</mainClass>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
 </project>
