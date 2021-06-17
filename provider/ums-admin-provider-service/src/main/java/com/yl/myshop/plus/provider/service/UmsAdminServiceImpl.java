@@ -31,6 +31,11 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 
     @Override
     public int registeredUmsAdmin(TUmsAdmin tUmsAdmin) {
+        Example.Criteria criteria = new Example(TUmsAdmin.class)
+                .createCriteria()
+                .andEqualTo("username", tUmsAdmin.getUsername());
+
+        TUmsAdmin admin = tUmsAdminMapper.selectOneByExample(criteria);
         initTumsAdmin(tUmsAdmin);
         int row = tUmsAdminMapper.insert(tUmsAdmin);
         return row;

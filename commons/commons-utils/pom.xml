@@ -5,12 +5,12 @@
 
     <parent>
         <groupId>com.yl.myshop.plus</groupId>
-        <artifactId>parent</artifactId>
+        <artifactId>commons</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>commons</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>commons-utils</artifactId>
+    <packaging>jar</packaging>
     <url>http://www.funtl.com</url>
     <inceptionYear>2018-Now</inceptionYear>
 
@@ -21,9 +21,21 @@
         </license>
     </licenses>
 
-    <properties>
-        <lombok.version>1.18.16</lombok.version>
-    </properties>
+    <dependencies>
+
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
 
     <developers>
         <developer>
@@ -32,19 +44,4 @@
             <email>2218050479@qq.com</email>
         </developer>
     </developers>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-        </dependency>
-
-    </dependencies>
-
-    <modules>
-        <module>commons-dto</module>
-        <module>commons-utils</module>
-<!--        <module>commons-provider</module>-->
-    </modules>
 </project>
