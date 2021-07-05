@@ -90,7 +90,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
         endpoints
                 // 用于支持密码模式
                 .authenticationManager(authenticationManager)
-                .tokenStore(tokenStore());
+//                .tokenStore(tokenStore())
+                ;
     }
 
     @Override
@@ -110,6 +111,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // 客户端配置
-        clients.withClientDetails(jdbcClientDetailsService());
+//        clients.withClientDetails(jdbcClientDetailsService());
+        clients.inMemory()
+                .withClient("client")
+//                .redirectUris("http://www.baidu.com")
+                .secret(passwordEncoder.encode("secret"))
+                .authorizedGrantTypes("password", "authorization_code", "refresh_token")
+                .scopes("backend")
+                .resourceIds("backend-resources")
+                .accessTokenValiditySeconds(60*60*24)
+                .refreshTokenValiditySeconds(60 * 60 * 24 * 30);
     }
 }

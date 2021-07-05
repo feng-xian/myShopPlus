@@ -40,7 +40,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        System.out.println("-----------");
         auth.userDetailsService(userDetailsServiceBean());
+//        auth.inMemoryAuthentication()
+//                .withUser("admin")
+//                .password(passwordEncoder().encode("123456"))
+//                .roles("ADMIN");
     }
 
     /**

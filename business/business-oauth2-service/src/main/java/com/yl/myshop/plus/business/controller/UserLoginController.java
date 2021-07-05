@@ -22,6 +22,7 @@ public class UserLoginController {
     public ResponseResult<Map<String, Object>> login(@RequestBody LoginParam loginParam){
         Map<String, Object> map = new HashMap<String, Object>(2);
         map.put("token","123546");
+        System.out.println("password-------------->"+loginParam.getPassword());
         return new ResponseResult<Map<String, Object>>(20000, HttpStatus.OK.toString(), map);
     }
 

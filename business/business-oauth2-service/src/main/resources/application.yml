@@ -37,7 +37,7 @@ spring:
 
 dubbo:
   scan:
-    base-packages: com.yl.myshop.plus.business.controller, com.yl.myshop.plus.business.service
+    base-packages: com.yl.myshop.plus.business.controller, com.yl.myshop.plus.business.service, com.yl.myshop.plus.business.configure
   protocol:
     name: dubbo
     port: -1
