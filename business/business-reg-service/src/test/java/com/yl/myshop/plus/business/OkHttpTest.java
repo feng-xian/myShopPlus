@@ -14,29 +14,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.IOException;
 
 /**
- * @Author : YeLei
- * @Date : 2021/5/7 19:31
+ * @Author : 凤仙
+ * @Date : 2021/6/27 14:37
  * @Version : 1.0
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class OkHttp3Test {
+public class OkHttpTest {
 
-
-    
     @Test
-    public void OkHttp3Get(){
-        String url = "https://www.baidu.com";
-        OkHttpClient httpClient = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
-        Call call = httpClient.newCall(request);
-        try {
-            Response response = call.execute();
-            String body = response.body().string();
-            System.out.println(body);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void runTest(){
+        System.out.println("-------- 启动成功 ----------");
     }
 
     @Test

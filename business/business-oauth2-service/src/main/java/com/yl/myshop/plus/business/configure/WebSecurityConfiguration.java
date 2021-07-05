@@ -1,6 +1,6 @@
 package com.yl.myshop.plus.business.configure;
 
-import com.yl.myshop.plus.business.service.UserDetailsServiceImpl;
+import com.yl.myshop.plus.business.configure.service.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -55,9 +55,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
         return super.authenticationManagerBean();
     }
 
+
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/user/login");
+        web.ignoring().antMatchers("/user/login")
+                .antMatchers("/oauth/check_token");
     }
 
     @Override
@@ -69,15 +71,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.exceptionHandling()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-//        http.exceptionHandling()
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                // 授权访问
-//                .antMatchers("/user/info").hasAuthority("USER")
-//                .antMatchers("/user/logout").hasAuthority("USER");
     }
 
 }

@@ -115,7 +115,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector-java.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>${mapper-spring-boot-starter.version}</version>
+        </dependency>
         <!-- Projects -->
 <!--        <dependency>-->
 <!--            <groupId>com.yl.myshop.plus</groupId>-->

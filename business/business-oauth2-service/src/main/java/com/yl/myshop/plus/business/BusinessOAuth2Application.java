@@ -2,6 +2,7 @@ package com.yl.myshop.plus.business;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @Author : 凤仙
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version : 1.0
  */
 @SpringBootApplication
+@MapperScan(value = "com.yl.myshop.plus.business.mapper")
 public class BusinessOAuth2Application {
 
     public static void main(String[] args) {

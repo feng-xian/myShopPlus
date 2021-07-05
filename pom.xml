@@ -14,17 +14,13 @@
     <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <url>http://www.funtl.com</url>
+    <url>https://www.funtl.com</url>
 
     <modules>
         <module>dependencies</module>
         <module>commons</module>
-<!--        <module>configuration</module>-->
         <module>provider</module>
         <module>business</module>
-<!--        <module>gateway</module>-->
-<!--        <module>cloud</module>-->
-<!--        <module>message</module>-->
     </modules>
 
     <properties>

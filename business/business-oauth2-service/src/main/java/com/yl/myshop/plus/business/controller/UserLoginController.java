@@ -18,11 +18,10 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserLoginController {
 
-
     @PostMapping(value = "/login")
     public ResponseResult<Map<String, Object>> login(@RequestBody LoginParam loginParam){
         Map<String, Object> map = new HashMap<String, Object>(2);
-        map.put("token","132456");
+        map.put("token","123546");
         return new ResponseResult<Map<String, Object>>(20000, HttpStatus.OK.toString(), map);
     }
 

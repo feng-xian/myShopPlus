@@ -2,6 +2,7 @@ package com.yl.myshop.plus.provider;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * @Author : 凤仙
@@ -9,11 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Version : 1.0
  */
 @SpringBootApplication
+@MapperScan("com.yl.myshop.plus.provider.mapper")
 public class ProviderAdminApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(ProviderAdminApplication.class, args);
-
     }
 }
