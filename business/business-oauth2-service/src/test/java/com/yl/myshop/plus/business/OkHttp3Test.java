@@ -1,5 +1,8 @@
 package com.yl.myshop.plus.business;
 
+import com.google.common.collect.Maps;
+import com.yl.myshop.plus.commons.utils.okhttp3.MapperUtils;
+import com.yl.myshop.plus.commons.utils.okhttp3.OkHttpClientUtil;
 import okhttp3.Call;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
@@ -12,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author : YeLei
@@ -59,6 +64,25 @@ public class OkHttp3Test {
             Response response = call.execute();
             System.out.println(response.body().string());
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testOkHttpUtil(){
+        String url = "http://localhost:9001/oauth/token";
+        HashMap<String, String> hashMap = Maps.newHashMap();
+        hashMap.put("username","admin");
+        hashMap.put("password","123456");
+        hashMap.put("grant_type","password");
+        hashMap.put("client_id","client");
+        hashMap.put("client_secret","secret");
+        Response response = OkHttpClientUtil.getInstance().postData(url, hashMap);
+        try {
+            String resp = response.body().string();
+            Map<String, Object> json2map = MapperUtils.json2map(resp);
+            System.out.println("result is : "+json2map.get("access_token"));
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

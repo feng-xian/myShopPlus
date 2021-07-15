@@ -57,3 +57,9 @@ management:
     web:
       exposure:
         include: "*"
+
+business:
+  oauth2:
+    access_client_grant_type: password
+    access_client_client_id: client
+    access_client_client_secret: secret

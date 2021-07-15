@@ -23,6 +23,11 @@ public class TumsAdminTest {
     private TUmsAdminMapper tUmsAdminMapper;
 
     @Test
+    public void test(){
+        System.out.println("------------");
+    }
+
+    @Test
     public void testDBlink(){
        List<TUmsAdmin> list = tUmsAdminMapper.selectAll();
         for (TUmsAdmin ta : list) {

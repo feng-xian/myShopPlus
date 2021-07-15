@@ -40,12 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        System.out.println("-----------");
         auth.userDetailsService(userDetailsServiceBean());
-//        auth.inMemoryAuthentication()
-//                .withUser("admin")
-//                .password(passwordEncoder().encode("123456"))
-//                .roles("ADMIN");
     }
 
     /**
@@ -75,7 +70,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter{
          */
         http.exceptionHandling()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                // 授权访问
+                .antMatchers("/user/info").hasAuthority("USER")
+                .antMatchers("/user/logout").hasAuthority("USER")
+        ;
     }
 
 }

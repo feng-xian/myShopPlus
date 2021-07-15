@@ -39,8 +39,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         if (true){
-            ArrayList<GrantedAuthority> grantedAuthList = Lists.newArrayList();
-            return new User(USERNAME, PASSWORD, grantedAuthList);
+            if (USERNAME.equals(username)){
+                ArrayList<GrantedAuthority> grantedAuthList = Lists.newArrayList();
+                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("USER");
+                grantedAuthList.add(grantedAuthority);
+                return new User(USERNAME, PASSWORD, grantedAuthList);
+            }
+
+            // 用户名不匹配
+            else {
+                return null;
+            }
+
         }
 
         TbUser tbUser = userService.getUserByUsername(username);
