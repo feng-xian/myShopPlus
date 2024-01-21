@@ -1,0 +1,53 @@
+base:
+  config:
+    tidb:
+      hostname: localhost
+      port: 3306
+    nacos:
+      hostname: 192.168.171.130
+      port: 8848
+      username: nacos
+      password: nacos
+
+spring:
+  application:
+    name: ums-admin-provider
+  main:
+    allow-bean-definition-overriding: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${base.config.tidb.hostname}:${base.config.tidb.port}/mplus_ums_admin?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 18786711938
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+dubbo:
+  application:
+    # 官方类检查机制文档：
+    # https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/advanced-features-and-usage/security/class-check/
+    # Serializable 接口检查模式，Dubbo 中默认配置为 `true` 开启检查
+    check-serializable: false
+    # 检查模式分为三个级别：STRICT 严格检查，WARN 告警，DISABLE 禁用 3.2 版本中默认为 STRICT 严格检查级别
+    serialize-check-status: DISABLE
+  scan:
+    base-packages: com.fx.shop.provider.service
+  protocol:
+    name: dubbo
+    port: -1
+#    serialization: kryo
+  registry:
+    address: nacos://${base.config.nacos.hostname}:${base.config.nacos.port}?username=${base.config.nacos.username}&password=${base.config.nacos.password}
+
+mybatis:
+  type-aliases-package: com.fx.shop.provider.domain
+  mapper-locations: classpath:mapper/*.xml
+
