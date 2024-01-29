@@ -22,6 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
+import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.core.oidc.OidcScopes;
@@ -37,7 +39,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
-import javax.sql.DataSource;
 import java.util.UUID;
 
 /**
@@ -98,25 +99,34 @@ public class AuthorizationServerConfiguration {
 
     */
 
-//    public DataSource dataSource(){
-//        return DataSourceBuilder.create().build();
-//    }
 
     /**
      * 基与jdbc的客户端管理
      * @param jdbcTemplate
      * @return
      */
-//    @Bean
-//    public RegisteredClientRepository jdbcRegisteredClientRepository(JdbcTemplate jdbcTemplate) {
-//        return new JdbcRegisteredClientRepository(jdbcTemplate);
-//    }
+    @Bean
+    public RegisteredClientRepository jdbcRegisteredClientRepository(JdbcTemplate jdbcTemplate) {
+        return new JdbcRegisteredClientRepository(jdbcTemplate);
+    }
+
+    /**
+     * 授权
+     * @param jdbcTemplate
+     * @param registeredClientRepository
+     * @return
+     */
+    @Bean
+    public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
+        return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+    }
+
 
     /**
      * 主要用于管理客户端
      * @return
      */
-    @Bean
+//    @Bean
     public RegisteredClientRepository registeredClientRepository() {
         // @formatter:off
         RegisteredClient loginClient = RegisteredClient.withId(UUID.randomUUID().toString())
@@ -135,7 +145,9 @@ public class AuthorizationServerConfiguration {
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
                 .scope("message.read")
+                // 客服端配置-是否需要用户授权-需要
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+//                .tokenSettings()
                 .build();
         // @formatter:on
 

@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.UnsupportedEncodingException;
@@ -29,6 +30,14 @@ public class ProviderAdminApplicationTest {
 
     @Resource
     private UmsAdminService umsAdminService;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Test
+    public void encoder(){
+        String encode = passwordEncoder.encode("123456");
+        System.out.println(encode);
+    }
 
     @Test
     public void testSelectAll() {

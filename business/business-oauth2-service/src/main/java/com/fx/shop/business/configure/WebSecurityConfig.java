@@ -10,12 +10,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.sql.DataSource;
 
 
 /**
@@ -53,10 +50,10 @@ public class WebSecurityConfig {
         return new InMemoryUserDetailsManager(user1, user2);
     }
 
-    @Bean
-    public JdbcUserDetailsManager jdbcUserDetailsManager(){
-        return new JdbcUserDetailsManager();
-    }
+//    @Bean
+//    public JdbcUserDetailsManager jdbcUserDetailsManager(){
+//        return new JdbcUserDetailsManager();
+//    }
 
     /**
      * Spring Security的过滤器链，用于Spring Security的身份认证
