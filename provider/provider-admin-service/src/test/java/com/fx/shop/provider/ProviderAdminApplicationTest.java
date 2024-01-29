@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 
@@ -55,4 +57,26 @@ public class ProviderAdminApplicationTest {
 
     }
 
+    @Test
+    public void base64(){
+        String oid = "oidclient:secret";
+        String encode = encode(oid);
+        System.out.println(encode);
+
+        String aa = "Authorization Basic b2lkY2xpZW50OnNlY3JldA==";
+    }
+
+    public static byte[] encode(byte[] bytes) {
+        return Base64.getEncoder().encode(bytes);
+    }
+
+    public static String encode(String string) {
+        byte[] encode = encode(string.getBytes());
+        try {
+            return new String(encode, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }
