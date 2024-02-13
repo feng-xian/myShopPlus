@@ -21,4 +21,11 @@
     <select id="selectDemo" resultType="java.lang.Object">
         SELECT * FROM UMS_ADMIN LIMIT 1;
     </select>
+
+    <select id="getUserInfoByUsername" resultType="java.util.Map">
+        SELECT
+            id, username, icon, email, nick_name, note, create_time, login_time, `status`
+        FROM UMS_ADMIN where username = #{username} LIMIT 1;
+    </select>
+
 </mapper>

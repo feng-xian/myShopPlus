@@ -14,7 +14,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.MalformedParameterizedTypeException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Component
@@ -36,5 +38,12 @@ public class UserDetailService implements UserDetailsService {
 
         return new User(umsAdmin.getUsername(), umsAdmin.getPassword(), grantedAuthorities);
     }
+
+    public Map<String, Object> getUserInfoMap(String username) throws UsernameNotFoundException {
+        return umsAdminService.getUserInfoMap(username);
+    }
+
+
+
 
 }

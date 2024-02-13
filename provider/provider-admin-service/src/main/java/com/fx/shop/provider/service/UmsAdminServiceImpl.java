@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.Objects;
 
 @DubboService(version = "umsAdminImpl")
@@ -44,6 +45,11 @@ public class UmsAdminServiceImpl implements UmsAdminService {
             throw new RuntimeException(e);
         }
         return umsAdmin;
+    }
+
+    @Override
+    public Map<String, Object> getUserInfoMap(String userName) {
+        return umsAdminMapper.getUserInfoByUsername(userName);
     }
 
     private void initUserInfo(UmsAdmin umsAdmin){

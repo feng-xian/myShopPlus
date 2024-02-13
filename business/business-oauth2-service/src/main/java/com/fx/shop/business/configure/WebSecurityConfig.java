@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 
 
@@ -48,10 +49,6 @@ public class WebSecurityConfig {
         return new InMemoryUserDetailsManager(user1, user2);
     }
 
-//    @Bean
-//    public JdbcUserDetailsManager jdbcUserDetailsManager(){
-//        return new JdbcUserDetailsManager();
-//    }
 
     /**
      * Spring Security的过滤器链，用于Spring Security的身份认证
@@ -59,9 +56,9 @@ public class WebSecurityConfig {
      * @return
      * @throws Exception
      */
-    @Bean
-    @Order(2)
-    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
+//    @Bean
+//    @Order(2)
+    public SecurityFilterChain defaultSecurityFilterChain2(HttpSecurity http)
             throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
@@ -77,6 +74,34 @@ public class WebSecurityConfig {
 //				// Form login handles the redirect to the login page from the
 //				// authorization server filter chain
                 .formLogin(Customizer.withDefaults())
+        ;
+
+        return http.build();
+    }
+
+    @Bean
+    @Order(2)
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http)
+            throws Exception {
+        http
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers(new AntPathRequestMatcher("/actuator/**"),
+                                new AntPathRequestMatcher("/oauth2/**"),
+                                new AntPathRequestMatcher("/**/*.json"),
+                                new AntPathRequestMatcher("/client/**/**"),
+                                new AntPathRequestMatcher("/**/*.html")).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
+//                .httpBasic(Customizer.withDefaults())
+//				// Form login handles the redirect to the login page from the
+//				// authorization server filter chain
+                .formLogin(Customizer.withDefaults())
+//                .oauth2Login((login) -> {
+//                    login.failureHandler(new Oauth2FailureHandler());
+//                })
+//                .formLogin(v -> v.loginPage(""))
         ;
 
         return http.build();

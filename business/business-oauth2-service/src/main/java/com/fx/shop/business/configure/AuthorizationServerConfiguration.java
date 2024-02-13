@@ -6,6 +6,8 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
 import com.fx.shop.business.handler.Oauth2FailureHandler;
+import com.fx.shop.business.handler.Oauth2SuccessHandler;
+import com.fx.shop.business.service.UserDetailService;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
@@ -13,6 +15,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +35,19 @@ import org.springframework.security.oauth2.server.authorization.client.InMemoryR
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configuration.OAuth2AuthorizationServerConfiguration;
 import org.springframework.security.oauth2.server.authorization.config.annotation.web.configurers.OAuth2AuthorizationServerConfigurer;
+import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationContext;
+import org.springframework.security.oauth2.server.authorization.oidc.authentication.OidcUserInfoAuthenticationToken;
 import org.springframework.security.oauth2.server.authorization.settings.AuthorizationServerSettings;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
 
 import java.util.UUID;
+import java.util.function.Function;
 
 /**
  * 认证服务器
@@ -48,6 +55,8 @@ import java.util.UUID;
 @Configuration
 public class AuthorizationServerConfiguration {
 
+    @Autowired
+    private UserDetailService userDetailService;
 
 //    @Autowired
 //    private BCryptPasswordEncoder passwordEncoder;
@@ -82,6 +91,49 @@ public class AuthorizationServerConfiguration {
     @Bean
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http)
+            throws Exception {
+        //针对 Spring Authorization Server 最佳实践配置
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
+
+        //自定义用户映射器
+        Function<OidcUserInfoAuthenticationContext, OidcUserInfo> userInfoMapper = (context) -> {
+            OidcUserInfoAuthenticationToken authentication = context.getAuthentication();
+            JwtAuthenticationToken principal = (JwtAuthenticationToken) authentication.getPrincipal();
+            return new OidcUserInfo(userDetailService.getUserInfoMap(principal.getName()));
+        };
+
+        http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
+                //设置客户端授权中失败的handler处理
+                .clientAuthentication((auth) ->
+                        auth.errorResponseHandler(new Oauth2FailureHandler()))
+                //token 相关配置 如  /oauth2/token接口
+                .tokenEndpoint((token) -> token.errorResponseHandler(new Oauth2FailureHandler()))
+                // Enable OpenID Connect 1.0， 包括用户信息等
+                //.oidc(Customizer.withDefaults());
+                .oidc((oidc) -> {
+                    oidc.userInfoEndpoint((userInfo) -> {
+                                userInfo.userInfoMapper(userInfoMapper);
+                                userInfo.userInfoResponseHandler(new Oauth2SuccessHandler());
+                            }
+                    );
+                });
+        http.csrf(AbstractHttpConfigurer::disable)
+                .exceptionHandling((exceptions) -> exceptions
+                        .defaultAuthenticationEntryPointFor(
+                                new LoginUrlAuthenticationEntryPoint("/login"),
+                                new MediaTypeRequestMatcher(MediaType.TEXT_HTML)
+                        )
+                )
+                // Accept access tokens for User Info and/or Client Registration
+                .oauth2ResourceServer((resourceServer) -> resourceServer
+                        .jwt(Customizer.withDefaults()));
+
+        return http.build();
+    }
+
+//    @Bean
+//    @Order(1)
+    public SecurityFilterChain authorizationServerSecurityFilterChain3(HttpSecurity http)
             throws Exception {
         //针对 Spring Authorization Server 最佳实践配置
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
