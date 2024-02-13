@@ -1,6 +1,5 @@
 package com.fx.shop.business.configure;
 
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -27,12 +26,11 @@ public class WebSecurityConfig {
     }
 
 
-
     /**
      * 主要进行用户身份验证
      * @return
      */
-    @Bean
+//    @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user1 = User
                 .builder()

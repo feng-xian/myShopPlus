@@ -5,6 +5,8 @@ import com.fx.shop.provider.domain.UmsAdmin;
 import com.fx.shop.provider.mapper.UmsAdminMapper;
 import jakarta.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tk.mybatis.mapper.entity.Example;
 
@@ -13,6 +15,8 @@ import java.util.Objects;
 
 @DubboService(version = "umsAdminImpl")
 public class UmsAdminServiceImpl implements UmsAdminService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UmsAdminServiceImpl.class);
 
     @Resource
     private UmsAdminMapper umsAdminMapper;
@@ -32,7 +36,14 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         Example example = new Example(UmsAdmin.class);
         example.createCriteria().andEqualTo("username", userName);
 
-        return umsAdminMapper.selectOneByExample(example);
+        logger.info("++++++++++++++++");
+        UmsAdmin umsAdmin = null;
+        try {
+            umsAdmin = umsAdminMapper.selectOneByExample(example);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return umsAdmin;
     }
 
     private void initUserInfo(UmsAdmin umsAdmin){

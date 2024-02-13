@@ -58,6 +58,11 @@ spring:
 #        max-active: 8
 
 dubbo:
+  application:
+    # Serializable 接口检查模式，Dubbo 中默认配置为 `true` 开启检查
+    check-serializable: false
+    # 检查模式分为三个级别：STRICT 严格检查，WARN 告警，DISABLE 禁用 3.2 版本中默认为 STRICT 严格检查级别
+    serialize-check-status: DISABLE
   scan:
     base-packages: com.fx.shop.business.controller, com.fx.shop.business.service
   protocol:
