@@ -99,7 +99,6 @@ public class AuthorizationServerConfiguration {
 
     */
 
-
     /**
      * 基与jdbc的客户端管理
      * @param jdbcTemplate
@@ -109,18 +108,6 @@ public class AuthorizationServerConfiguration {
     public RegisteredClientRepository jdbcRegisteredClientRepository(JdbcTemplate jdbcTemplate) {
         return new JdbcRegisteredClientRepository(jdbcTemplate);
     }
-
-    /**
-     * 授权
-     * @param jdbcTemplate
-     * @param registeredClientRepository
-     * @return
-     */
-    @Bean
-    public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
-        return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
-    }
-
 
     /**
      * 主要用于管理客户端
@@ -153,6 +140,18 @@ public class AuthorizationServerConfiguration {
 
         return new InMemoryRegisteredClientRepository(loginClient);
     }
+
+    /**
+     * 授权
+     * @param jdbcTemplate
+     * @param registeredClientRepository
+     * @return
+     */
+    @Bean
+    public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
+        return new JdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+    }
+
 
     /**
      * JWKSource：用于签名访问令牌
