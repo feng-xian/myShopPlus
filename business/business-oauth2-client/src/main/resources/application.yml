@@ -1,0 +1,95 @@
+base:
+  config:
+    tidb:
+      hostname: localhost
+      port: 3306
+    nacos:
+      hostname: com.fx.shop.cloud
+      port: 8848
+      username: nacos
+      password: nacos
+
+server:
+  port: 9002
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: debug
+    org.springframework.security: debug
+    org.springframework.security.oauth2: debug
+
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
+    org.springframework.security.web.FilterChainProxy: trace # 过滤器执行顺序
+    org.springframework.security.web.access.ExceptionTranslationFilter: trace #异常处理
+
+spring:
+  application:
+    name: business-oauth2-client
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${base.config.nacos.hostname}:${base.config.nacos.port}
+        username: ${base.config.nacos.username}
+        password: ${base.config.nacos.password}
+    sentinel:
+      transport:
+        dashboard: ${base.config.sentile.hostname}:${base.config.sentile.port}
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${base.config.tidb.hostname}:${base.config.tidb.port}/shop_oauth2?useUnicode=true&characterEncoding=utf-8&serverTimezone=Hongkong&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 18786711938
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: MyHikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+  security:
+    oauth2:
+      client:
+        provider:
+          test-provider1:
+            issuer-uri: http://activate.navicat.com:9001
+            token-uri: http://activate.navicat.com:9001/oauth2/token
+#            issuer-uri: http://192.168.1.4:9001
+            user-info-uri: ${spring.security.oauth2.client.provider.test-provider1.issuer-uri}/user
+        registration:
+          oidclient:
+            client-id: oidclient
+            client-secret: secret
+#            client-secret: $2a$10$QJxJsodvFv/uIjILB3lFsOMG1C1lAN7jKeH9NltKCzpY91zEUkUZG
+            client-name: testClientName
+            provider: test-provider1
+            client-authentication-method: client_secret_basic
+            redirect-uri: '{baseUrl}/{action}/oauth2/code/{registrationId}'
+#            redirect-uri: http://127.0.0.1:9002/login/oauth2/code/oidclient
+#            redirect-uri: https://www.baidu.com
+            authorization-grant-type: authorization_code
+            scope: openid, profile, message.read
+#              - all
+
+dubbo:
+  application:
+    # 官方类检查机制文档：
+    # https://cn.dubbo.apache.org/zh-cn/overview/mannual/java-sdk/advanced-features-and-usage/security/class-check/
+    # Serializable 接口检查模式，Dubbo 中默认配置为 `true` 开启检查
+    check-serializable: false
+    # 检查模式分为三个级别：STRICT 严格检查，WARN 告警，DISABLE 禁用 3.2 版本中默认为 STRICT 严格检查级别
+    serialize-check-status: DISABLE
+  scan:
+    base-packages: com.fx.shop.provider.service
+  protocol:
+    name: dubbo
+    port: -1
+  #    serialization: kryo
+  registry:
+    address: nacos://${base.config.nacos.hostname}:${base.config.nacos.port}?username=${base.config.nacos.username}&password=${base.config.nacos.password}

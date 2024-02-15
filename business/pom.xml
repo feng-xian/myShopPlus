@@ -73,5 +73,6 @@
     <modules>
         <module>business-reg-service</module>
         <module>business-oauth2-service</module>
+        <module>business-oauth2-client</module>
     </modules>
 </project>
